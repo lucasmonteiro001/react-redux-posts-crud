@@ -29,9 +29,9 @@ class PostsShow extends Component {
 
     render() {
 
-        const {post} = this.props;
+        const {post, fetching} = this.props;
 
-        if(!post) {
+        if(!post || fetching) {
             return <div>Loading...</div>
         }
         return (
@@ -52,7 +52,8 @@ class PostsShow extends Component {
 
 function mapStateToProps(state) {
     return {
-        post: state.posts.post
+        post: state.posts.post,
+        fetching: state.posts.fetching
     }
 }
 
