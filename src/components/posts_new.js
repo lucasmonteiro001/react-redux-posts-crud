@@ -1,12 +1,27 @@
 /**
  * Created by lucas on 3/2/17.
  */
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {reduxForm} from 'redux-form';
 import {createPost} from '../actions/index';
 import {Link} from 'react-router';
 
 class PostsNew extends Component {
+
+    // To get access to the push property of React Router
+    // Can get information from parent components
+    static contextTypes = {
+        router: PropTypes.object
+    };
+
+    onSubmit =(props) => {
+
+        this.props.createPost(props)
+            .then(() => {
+                // blog post successfully created. Navigate to index
+                this.context.router.push('/');
+            });
+    };
 
     render() {
 
@@ -14,7 +29,7 @@ class PostsNew extends Component {
 
         return (
             // pass an action creator
-            <form onSubmit={handleSubmit(this.props.createPost)}>
+            <form onSubmit={handleSubmit(this.onSubmit)}>
                 <h3>Create a new Post</h3>
                 <div className={`form-group ${title.touched && title.invalid ? 'has-danger' : ''}`}>
                     <label>Title</label>
